@@ -1,6 +1,5 @@
 Berikut versi yang telah diperbaiki dan diformat dengan baik untuk ditaruh di file `README.md` GitHub:
 
-```markdown
 ## 🚀 Instalasi CMS (Wajib Ubuntu 24.04)
 
 **Pastikan kamu menggunakan Ubuntu 24.04**
