@@ -7,7 +7,7 @@ Berikut versi yang telah diperbaiki dan diformat dengan baik untuk ditaruh di fi
 ```bash
 sudo mkdir -p /opt/cms \
 && sudo chown $USER:$USER /opt/cms \
-&& cd /opt/cms-cdata
+&& cd /opt/cms
 ```
 ```bash
 wget https://raw.githubusercontent.com/andrydtm/cms/refs/heads/main/install_docker.sh \
