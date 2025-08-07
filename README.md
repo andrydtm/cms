@@ -14,13 +14,14 @@ wget https://raw.githubusercontent.com/andrydtm/cms/refs/heads/main/install_dock
 ```
 **3. Install CMS**
 ```bash
-sudo ./cms_install.sh install --version <cms_version>
+cd /opt/cms && sudo ./cms_install.sh install --version <cms_version>
 ```
-_Versi saat ini 3.6.24_
-_Saat diminta untuk memilih opsi, cukup pilih **n** (tidak) jika ragu._
+- _Versi saat ini 3.6.24_
+- _Saat diminta untuk memilih opsi, cukup pilih **n** (tidak) jika ragu._
+
 **4. Upgrade CMS**
 ```bash
-sudo ./cms_install.sh upgrade --version <cms_version>
+cd /opt/cms && sudo ./cms_install.sh upgrade --version <cms_version>
 ```
 **5. Restart CMS**
 ```bash
@@ -29,5 +30,5 @@ cd /opt/cms \
 && sudo docker compose up -d
 ```
 ### ⚠️ Catatan
-
 - Login awal mungkin agak sulit — **coba beberapa kali hingga berhasil.**
+- Silahkan sesuaikan tempat folder **/opt/cms** sesuai keinginan.
