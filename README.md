@@ -18,7 +18,7 @@ wget https://raw.githubusercontent.com/andrydtm/cms/refs/heads/main/install_dock
 ```bash
 cd /opt/cms && sudo ./cms_install.sh install --version <cms_version>
 ```
-- _Versi saat ini 3.6.24_
+- _Versi saat ini 3.6.26_
 - _Saat diminta untuk memilih opsi, cukup pilih **n** (tidak) jika ragu._
 
 **4. Upgrade CMS**
