@@ -42,10 +42,3 @@ echo "TEST DOCKER"
 echo "========================="
 
 sudo docker run --rm hello-world
-
-echo "========================="
-echo "DOWNLOAD CMS"
-echo "========================="
-
-sudo curl -o cms_install.sh https://cms.s.cdatayun.com/cms_linux/cms_install.sh
-sudo chmod +x ./cms_install.sh
