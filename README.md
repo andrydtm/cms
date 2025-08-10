@@ -54,7 +54,7 @@ cd /opt/cms \
 ```bash
 cd /opt/cms \
 && sudo docker compose down \
-&& sudo rm -rf /opt/cms
+&& sudo rm -rf /opt/cms/*
 
 ```
 
