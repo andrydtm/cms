@@ -173,20 +173,20 @@ cd ~ \
 ### Tambahkan
 ```ini
 [Interface]
-Address = 10.10.10.1/16         # IP VPN Server
+Address = 10.10.0.1/16         # IP VPN Server
 ListenPort = 51820              # Port WireGuard server
-PrivateKey = <isi_dengan_server_privatekey>
+PrivateKey = <Privatekey_VPS>
 
 # Nanti diisi setelah punya public key dari Mikrotik
 #[Peer]
 #PublicKey = <PUBKEY_DARI_MIKROTIK>
-#AllowedIPs = 10.10.10.2/32,<Tambahkan IP Lokal dan Pisahkan Dengan Koma contoh 192.168.10.0/24,10.100.0.0/16 >
+#AllowedIPs = 10.10.0.2/32,<Tambahkan IP Lokal dan Pisahkan Dengan Koma contoh 192.168.10.0/24,10.100.0.0/16>
 #PersistentKeepalive = 25
 ```
 ### Restart WireGruad
 ```bash
 cd ~ \
-&& sudo wg-quick down wg0
+&& sudo wg-quick down wg0 \
 && sudo wg-quick up wg0
 ```
 ---
@@ -194,8 +194,10 @@ cd ~ \
 ## 4. Aktifkan IP forwarding
 ```bash
 cd ~ \
-&& sudo sysctl -w net.ipv4.ip_forward=1
-&& sudo iptables -t nat -A POSTROUTING -s 10.10.10.1/16 -o eth0 -j MASQUERADE
+&& sudo sysctl -w net.ipv4.ip_forward=1 \
+&& sudo iptables -t nat -A POSTROUTING -s 10.10.0.1/16 -o eth0 -j MASQUERADE \
+&& sudo iptables -t nat -A POSTROUTING -s 10.100.0.1/16 -o eth0 -j MASQUERADE
+&& sudo iptables -t nat -A POSTROUTING -s 10.88.0.1/16 -o eth0 -j MASQUERADE
 ```
 ### Cek iptables:
 ```bash
@@ -276,16 +278,13 @@ sudo ip route add 10.100.0.0/16 dev wg0
 
 ## 3. Tambahkan IP address
 ```bash
-/ip address add address=10.10.10.2/16 interface=wg0
+/ip address add address=10.10.0.2/16 interface=wg0 comment="WireGuard"
 ```
 ### Cek IP Route
 ```bash
 /ip route print
 ```
-### 
-```bash
-/ip route add dst-address=10.10.10.0/16 gateway=wg0
-```
+
 ---
 
 ## 3. Tambahkan peer
@@ -293,7 +292,7 @@ sudo ip route add 10.100.0.0/16 dev wg0
 /interface/wireguard/peers/add \
 interface=wg0 \
 public-key="PUBKEY_VPS" \
-allowed-address=10.10.10.1/32,<Tambahkan IP Lokal dan Pisahkan Dengan Koma contoh 192.168.10.0/24,10.100.0.0/16 > \
+allowed-address=10.10.0.1/32,<Tambahkan IP Lokal dan Pisahkan Dengan Koma contoh 192.168.10.0/24,10.100.0.0/16 > \
 endpoint-address=<IP_VPS> \
 endpoint-port=51820 \
 persistent-keepalive=25s
@@ -303,26 +302,29 @@ persistent-keepalive=25s
 
 ## 4. Pastikan firewall Mikrotik izinkan port WireGuard
 ```bash
-/ip/firewall/filter/add chain=input protocol=udp dst-port=51820 action=accept comment="Izinkan Port WireGuard"
+/ip firewall filter
+add chain=input protocol=udp dst-port=51820 action=accept comment="Izinkan Port WireGuard"
 ```
 
 ---
 
 ## 5. Pastikan firewall Mikrotik Izin TR-069 ke ACS
 ```bash
-/ip/firewall/filter/add chain=forward dst-address=<IP_VPS> protocol=tcp dst-port=9909 action=accept comment="Allow outbound TR-069 ke ACS" \
-/ip/firewall/filter/add chain=forward scr-address=<IP_VPS> protocol=tcp src-port=9909 action=accept comment="Allow inbound TR-069 dari ACS"
+/ip firewall filter
+add chain=forward dst-address=<IP_VPS> protocol=tcp dst-port=9909 action=accept comment="Allow outbound TR-069 ke ACS"
+add chain=forward src-address=<IP_VPS> protocol=tcp src-port=9909 action=accept comment="Allow inbound TR-069 dari ACS"
 ```
 
 ---
 
 ## 6. Mengizinkan forward dari WireGuard ke VLAN
 ```bash
-/ip firewall filter add chain=forward src-address=10.10.10.0/16 dst-address=10.100.0.0/16 action=accept comment="WireGuard Ke VLAN100"\
-/ip firewall filter add chain=forward src-address=10.100.0.0/16 dst-address=10.10.10.0/16 action=accept comment="VLAN100 KE WireGuard"
+/ip firewall filter
+add chain=forward src-address=10.10.0.0/16 dst-address=10.100.0.0/16 action=accept comment="WireGuard Ke VLAN100"
+add chain=forward src-address=10.100.0.0/16 dst-address=10.10.0.0/16 action=accept comment="VLAN100 KE WireGuard"
 
 ```
 ### Contoh
-> IP WireGuard = 10.10.10.0/16  
+> IP WireGuard = 10.10.0.0/16  
 > IP VLAN100 = 10.100.0.0/16
 ---
