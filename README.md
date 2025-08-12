@@ -9,7 +9,8 @@
 
 ## 1. Buat Folder CMS
 ```bash
-sudo mkdir -p /opt/cms \
+sudo timedatectl set-timezone Asia/Jakarta \
+&& sudo mkdir -p /opt/cms \
 && sudo chown -R $USER:$USER /opt/cms \
 && sudo chmod -R 755 /opt/cms \
 && cd /opt/cms
