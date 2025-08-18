@@ -21,7 +21,7 @@ Dokumentasi ini terbagi menjadi 2 bagian:
 ### 2. Buat Folder Instalasi CMS
 
 ```bash
-sudo timedatectl set-timezone Asia/Jakarta && sudo mkdir -p /opt/cms && sudo chown -R $USER:$USER /opt/cms && sudo chmod -R 755 /opt/cms && cd /opt/cms
+sudo timedatectl set-timezone Asia/Jakarta && sudo mkdir -p /opt/cms && sudo chmod -R 755 /opt/cms && cd /opt/cms
 ```
 
 > Folder `/opt/cms` adalah lokasi default instalasi.
