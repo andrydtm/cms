@@ -186,11 +186,22 @@ sudo systemctl restart wg-quick@wg0 && sudo systemctl enable wg-quick@wg0 && sud
 
 ---
 
-#### 6. Buka Port Firewall
+#### 6. Cek Port Firewall
 
 ```bash
-sudo ufw allow 51820/udp && sudo ufw reload
+sudo ss -tulnp
 ```
+
+#### 7. Pastikan NAT & Forwarding sudah benar
+
+```bash
+sudo iptables -t nat -L -n -v
+```
+```bash
+sudo iptables -L FORWARD -n -v
+```
+>- Pastikan ada rule **NAT** untuk **10.255.255.0/24** keluar lewat interface publik **(enp1s0)**
+>- Pastikan ada rule **FORWARD** untuk **wg0** in/out
 
 ---
 
