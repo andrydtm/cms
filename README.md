@@ -147,13 +147,13 @@ sudo nano /etc/wireguard/wg0.conf
 
 ```ini
 [Interface]
-Address = 10.10.10.1/24
+Address = 10.255.255.1/24
 PrivateKey = <PRIVATE_KEY_VPS>
 ListenPort = 51820
 
 [Peer]
 PublicKey = <PUBLIC_KEY_MIKROTIK>
-AllowedIPs = 10.10.10.2/32, <IP_LOKAL_TAMBAHAN>
+AllowedIPs = 10.255.255.2/32, <IP_LOKAL_TAMBAHAN>
 PersistentKeepalive = 25
 ```
 
@@ -167,7 +167,7 @@ PersistentKeepalive = 25
 #### 4. Aktifkan IP Forwarding & NAT
 
 ```bash
-sudo sysctl -w net.ipv4.ip_forward=1 && sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && sudo iptables -A FORWARD -i wg0 -j ACCEPT && sudo iptables -A FORWARD -o wg0 -j ACCEPT
+sudo sysctl -w net.ipv4.ip_forward=1 && sudo iptables -t nat -A POSTROUTING -s 10.255.255.0/24 -o enp1s0 -j MASQUERADE && sudo iptables -A FORWARD -i wg0 -j ACCEPT && sudo iptables -A FORWARD -o wg0 -j ACCEPT
 ```
 
 - ***Jadikan Permanen***
@@ -215,7 +215,7 @@ sudo ufw allow 51820/udp && sudo ufw reload
 #### 3. Tambahkan IP Address di Interface
 
 ```bash
-/ip address add address=10.10.10.2/24 interface=wg0 comment="WireGuard"
+/ip address add address=10.255.255.2/24 interface=wg0 comment="WireGuard"
 ```
 
 ---
@@ -229,7 +229,7 @@ add name=peer_wg0 \
     public-key="PUBLIC_KEY_VPS" \
     endpoint-address=<IP_VPS> \
     endpoint-port=51820 \
-    allowed-address=10.10.10.0/24,<IP_LOKAL_TAMBAHAN> \
+    allowed-address=10.255.255.0/24,<IP_LOKAL_TAMBAHAN> \
     persistent-keepalive=25s
 ```
 
@@ -247,7 +247,7 @@ add name=peer_wg0 \
   ```
   > Ping WG Client Mikrotik Di VPS
   ```bash
-  ping -c 3 10.10.10.2
+  ping -c 3 10.255.255.2
   ```
 - Cek koneksi WireGuard di Mikrotik:
   ```bash
@@ -255,7 +255,7 @@ add name=peer_wg0 \
   ```
   > Ping WG Server VPS di Mikrotik
   ```bash
-  ping -c 3 10.10.10.1
+  ping 10.255.255.1
   ```
 
 ---
