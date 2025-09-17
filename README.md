@@ -181,9 +181,11 @@ sudo sysctl -w net.ipv4.ip_forward=1 && sudo iptables -t nat -A POSTROUTING -s 1
 #### 5. Start WireGuard
 
 ```bash
-sudo systemctl restart wg-quick@wg0 && sudo systemctl enable wg-quick@wg0 && sudo systemctl status --no-pager wg-quick@wg0
+sudo systemctl restart wg-quick@wg0 && sudo systemctl enable wg-quick@wg0 && sudo systemctl status wg-quick@wg0
 ```
-
+```bash
+sudo wg-quick down wg0 && sudo wg-quick up wg0
+```
 ---
 
 #### 6. Cek Port Firewall
