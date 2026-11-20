@@ -41,10 +41,10 @@ wget https://raw.githubusercontent.com/andrydtm/cms/refs/heads/main/install_dock
 ### 4. Download & Install CMS
 
 ```bash
-sudo curl -o cms_install.sh https://cms.s.cdatayun.com/cms_linux/cms_install.sh && sudo chmod +x ./cms_install.sh && sudo ./cms_install.sh install --version 4.5.24
+sudo curl -o cms_install.sh https://cms.s.cdatayun.com/cms_linux/cms_install.sh && sudo chmod +x ./cms_install.sh && sudo ./cms_install.sh install --version 4.5.26
 ```
 
-- Saat ini versi yang di install adalah versi `4.5.24`.  
+- Saat ini versi yang di install adalah versi `4.5.26`.  
 
 ---
 
