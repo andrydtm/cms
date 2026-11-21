@@ -84,6 +84,9 @@ cd /opt/cms && sudo docker exec -it cms-mysql sh -c 'mysql -uroot -p"${MYSQL_ROO
 ### 8. Restart CMS
 
 ```bash
+cd /opt/cms && sudo docker compose restart
+```
+```bash
 cd /opt/cms && sudo docker compose down && sudo docker compose up -d
 ```
 
@@ -92,7 +95,7 @@ cd /opt/cms && sudo docker compose down && sudo docker compose up -d
 ### 9. Uninstall CMS
 
 ```bash
-cd /opt/cms && sudo docker compose down && sudo rm -rf /opt/cms/*
+cd /opt/cms && sudo docker compose down -v --rmi all --remove-orphans && sudo rm -rf /opt/cms
 ```
 
 ---
